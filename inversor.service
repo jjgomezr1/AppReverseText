@@ -11,6 +11,9 @@ WorkingDirectory=/home/ubuntu/app
 ExecStart=/home/ubuntu/app/venv/bin/gunicorn --bind 0.0.0.0:80 --workers 2 app:app
 Restart=always
 RestartSec=3
+# El puerto 80 es privilegiado (<1024). Como el servicio corre como usuario
+# "ubuntu" (no root), necesita esta capability para poder bindearlo.
+AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
 WantedBy=multi-user.target
